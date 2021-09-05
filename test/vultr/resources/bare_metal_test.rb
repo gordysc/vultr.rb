@@ -21,11 +21,11 @@ class BareMetalResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     bare_metal = client.bare_metal.create(**body)
 
-    assert bare_metal.region, "ams"
-    assert bare_metal.date_created, Time.parse("2020-10-10T01:56:20+00:00")
-    assert bare_metal.plan, "vbm-4c-32gb"
-    assert bare_metal.label, "Example Bare Metal"
-    assert bare_metal.features, ["ipv6"]
+    assert_equal bare_metal.region, "ams"
+    assert_equal bare_metal.date_created, Time.parse("2020-10-10T01:56:20+00:00")
+    assert_equal bare_metal.plan, "vbm-4c-32gb"
+    assert_equal bare_metal.label, "Example Bare Metal"
+    assert_equal bare_metal.features, ["ipv6"]
   end
 
   def test_retrieve
@@ -34,28 +34,28 @@ class BareMetalResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     bare_metal = client.bare_metal.retrieve(baremetal_id: baremetal_id)
 
-    assert bare_metal.id, baremetal_id
-    assert bare_metal.os, "Application"
-    assert bare_metal.ram, "32768 MB"
-    assert bare_metal.disk, "2x 240GB SSD"
-    assert bare_metal.main_ip, "192.0.2.123"
-    assert bare_metal.cpu_count, 4
-    assert bare_metal.region, "ams"
-    assert bare_metal.date_created, "2020-10-10T01:56:20+00:00"
-    assert bare_metal.status, "pending"
-    assert bare_metal.netmask_v4, "255.255.254.0"
-    assert bare_metal.gateway_v4, "192.0.2.1"
-    assert bare_metal.plan, "vbm-4c-32gb"
-    assert bare_metal.v6_network, "2001:0db8:5001:3990::"
-    assert bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
-    assert bare_metal.v6_network_size, 64
-    assert bare_metal.mac_address, 2199756823533
-    assert bare_metal.label, "Example Bare Metal"
-    assert bare_metal.tag, "Example Tag"
-    assert bare_metal.os_id, 183
-    assert bare_metal.app_id, 3
-    assert bare_metal.image_id, ""
-    assert bare_metal.features, ["ipv6"]
+    assert_equal bare_metal.id, baremetal_id
+    assert_equal bare_metal.os, "Application"
+    assert_equal bare_metal.ram, "32768 MB"
+    assert_equal bare_metal.disk, "2x 240GB SSD"
+    assert_equal bare_metal.main_ip, "192.0.2.123"
+    assert_equal bare_metal.cpu_count, 4
+    assert_equal bare_metal.region, "ams"
+    assert_equal bare_metal.date_created, Time.parse("2020-10-10T01:56:20+00:00")
+    assert_equal bare_metal.status, "pending"
+    assert_equal bare_metal.netmask_v4, "255.255.254.0"
+    assert_equal bare_metal.gateway_v4, "192.0.2.1"
+    assert_equal bare_metal.plan, "vbm-4c-32gb"
+    assert_equal bare_metal.v6_network, "2001:0db8:5001:3990::"
+    assert_equal bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
+    assert_equal bare_metal.v6_network_size, 64
+    assert_equal bare_metal.mac_address, 2199756823533
+    assert_equal bare_metal.label, "Example Bare Metal"
+    assert_equal bare_metal.tag, "Example Tag"
+    assert_equal bare_metal.os_id, 183
+    assert_equal bare_metal.app_id, 3
+    assert_equal bare_metal.image_id, ""
+    assert_equal bare_metal.features, ["ipv6"]
   end
 
   def test_update
@@ -65,28 +65,28 @@ class BareMetalResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     bare_metal = client.bare_metal.update(baremetal_id: baremetal_id, **body)
 
-    assert bare_metal.id, baremetal_id
-    assert bare_metal.os, "Application"
-    assert bare_metal.ram, "32768 MB"
-    assert bare_metal.disk, "2x 240GB SSD"
-    assert bare_metal.main_ip, "192.0.2.123"
-    assert bare_metal.cpu_count, 4
-    assert bare_metal.region, "ams"
-    assert bare_metal.date_created, "2020-10-10T01:56:20+00:00"
-    assert bare_metal.status, "pending"
-    assert bare_metal.netmask_v4, "255.255.254.0"
-    assert bare_metal.gateway_v4, "192.0.2.1"
-    assert bare_metal.plan, "vbm-4c-32gb"
-    assert bare_metal.v6_network, "2001:0db8:5001:3990::"
-    assert bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
-    assert bare_metal.v6_network_size, 64
-    assert bare_metal.mac_address, 2199756823533
-    assert bare_metal.label, "Updated Bare Metal Label"
-    assert bare_metal.tag, "Updated Tag"
-    assert bare_metal.os_id, 183
-    assert bare_metal.app_id, 3
-    assert bare_metal.image_id, ""
-    assert bare_metal.features, ["ipv6"]
+    assert_equal bare_metal.id, baremetal_id
+    assert_equal bare_metal.os, "Application"
+    assert_equal bare_metal.ram, "32768 MB"
+    assert_equal bare_metal.disk, "2x 240GB SSD"
+    assert_equal bare_metal.main_ip, "192.0.2.123"
+    assert_equal bare_metal.cpu_count, 4
+    assert_equal bare_metal.region, "ams"
+    assert_equal bare_metal.date_created, Time.parse("2020-10-10T01:56:20+00:00")
+    assert_equal bare_metal.status, "pending"
+    assert_equal bare_metal.netmask_v4, "255.255.254.0"
+    assert_equal bare_metal.gateway_v4, "192.0.2.1"
+    assert_equal bare_metal.plan, "vbm-4c-32gb"
+    assert_equal bare_metal.v6_network, "2001:0db8:5001:3990::"
+    assert_equal bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
+    assert_equal bare_metal.v6_network_size, 64
+    assert_equal bare_metal.mac_address, 2199756823533
+    assert_equal bare_metal.label, "Updated Bare Metal Label"
+    assert_equal bare_metal.tag, "Updated Tag"
+    assert_equal bare_metal.os_id, 183
+    assert_equal bare_metal.app_id, 3
+    assert_equal bare_metal.image_id, ""
+    assert_equal bare_metal.features, ["ipv6"]
   end
 
   def test_delete
@@ -120,27 +120,27 @@ class BareMetalResourceTest < Minitest::Test
 
     bare_metal = client.bare_metal.reinstall(baremetal_id: baremetal_id)
 
-    assert bare_metal.id, baremetal_id
-    assert bare_metal.os, "Application"
-    assert bare_metal.ram, "32768 MB"
-    assert bare_metal.disk, "2x 240GB SSD"
-    assert bare_metal.main_ip, "192.0.2.123"
-    assert bare_metal.cpu_count, 4
-    assert bare_metal.region, "ams"
-    assert bare_metal.date_created, "2020-10-10T01:56:20+00:00"
-    assert bare_metal.status, "pending"
-    assert bare_metal.netmask_v4, "255.255.254.0"
-    assert bare_metal.gateway_v4, "192.0.2.1"
-    assert bare_metal.plan, "vbm-4c-32gb"
-    assert bare_metal.v6_network, "2001:0db8:5001:3990::"
-    assert bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
-    assert bare_metal.v6_network_size, 64
-    assert bare_metal.label, "Example Bare Metal"
-    assert bare_metal.mac_address, 2199756823533
-    assert bare_metal.tag, "Example Tag"
-    assert bare_metal.os_id, 183
-    assert bare_metal.app_id, 3
-    assert bare_metal.image_id, ""
+    assert_equal bare_metal.id, baremetal_id
+    assert_equal bare_metal.os, "Application"
+    assert_equal bare_metal.ram, "32768 MB"
+    assert_equal bare_metal.disk, "2x 240GB SSD"
+    assert_equal bare_metal.main_ip, "192.0.2.123"
+    assert_equal bare_metal.cpu_count, 4
+    assert_equal bare_metal.region, "ams"
+    assert_equal bare_metal.date_created, Time.parse("2020-10-10T01:56:20+00:00")
+    assert_equal bare_metal.status, "pending"
+    assert_equal bare_metal.netmask_v4, "255.255.254.0"
+    assert_equal bare_metal.gateway_v4, "192.0.2.1"
+    assert_equal bare_metal.plan, "vbm-4c-32gb"
+    assert_equal bare_metal.v6_network, "2001:0db8:5001:3990::"
+    assert_equal bare_metal.v6_main_ip, "2001:0db8:5001:3990:0ec4:7aff:fe8e:f97a"
+    assert_equal bare_metal.v6_network_size, 64
+    assert_equal bare_metal.label, "Example Bare Metal"
+    assert_equal bare_metal.mac_address, 2199756823533
+    assert_equal bare_metal.tag, "Example Tag"
+    assert_equal bare_metal.os_id, 183
+    assert_equal bare_metal.app_id, 3
+    assert_equal bare_metal.image_id, ""
   end
 
   def test_halt
