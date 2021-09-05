@@ -25,9 +25,8 @@ module Vultr
       Object.new get_request("kubernetes/clusters/#{vke_id}/config").body
     end
 
-    def list_resources(vke_id:, **params)
-      response = get_request("kubernetes/clusters/#{vke_id}/resources", params: params)
-      Collection.from_response(response, key: "resources", type: Object)
+    def list_resources(vke_id:)
+      Object.new get_request("kubernetes/clusters/#{vke_id}/resources").body.dig("resources")
     end
 
     def list_node_pools(vke_id:, **params)

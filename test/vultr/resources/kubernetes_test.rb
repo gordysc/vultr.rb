@@ -77,4 +77,14 @@ class KubernetesResourceTest < Minitest::Test
 
     assert_equal vke_cluster.kube_config, "kube_config"
   end
+
+  def test_list_resources
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("kubernetes/clusters/#{vke_id}/resources", response: stub_response(fixture: "kubernetes/list_resources"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    vke_cluster = client.kubernetes.list_resources(vke_id: vke_id)
+
+    assert_equal vke_cluster['block_storage'].class, Array
+    assert_equal vke_cluster.load_balancer.class, Array
+  end
 end
