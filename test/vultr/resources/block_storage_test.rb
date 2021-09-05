@@ -66,4 +66,12 @@ class BlockStorageResourceTest < Minitest::Test
     
     assert client.block_storage.delete(block_id: block_id)
   end
+
+  def test_attach
+    block_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("blocks/#{block_id}/attach", method: :post, response: stub_response(fixture: "block_storage/attach"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    
+    assert client.block_storage.attach(block_id: block_id)
+  end
 end
