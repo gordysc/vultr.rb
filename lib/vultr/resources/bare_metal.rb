@@ -34,7 +34,7 @@ module Vultr
     end
 
     def halt(baremetal_id:)
-      post_request("bare-metals/#{baremetal_id}/halt")
+      post_request("bare-metals/#{baremetal_id}/halt", body: {})
     end
 
     def bandwidth(baremetal_id:)

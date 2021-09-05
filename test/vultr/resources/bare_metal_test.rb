@@ -142,4 +142,12 @@ class BareMetalResourceTest < Minitest::Test
     assert bare_metal.app_id, 3
     assert bare_metal.image_id, ""
   end
+
+  def test_halt
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/halt", method: :post, body: {}, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert client.bare_metal.halt(baremetal_id: baremetal_id)
+  end
 end
