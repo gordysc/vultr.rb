@@ -1,5 +1,5 @@
 {
-  "baremetal": {
+  "bare_metal": {
     "id": "cb676a46-66fd-4dfb-b839-443f2e6c0b60",
     "os": "Application",
     "ram": "32768 MB",
