@@ -163,4 +163,14 @@ class KubernetesResourceTest < Minitest::Test
 
     assert client.kubernetes.delete_node_pool(vke_id: vke_id, nodepool_id: nodepool_id)
   end
+
+  def test_delete_node_pool_instance
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    nodepool_id = "e97bdee9-2781-4f31-be03-60fc75f399ae"
+    node_id = "ab809b79-1358-4c59-8c8e-b73add699bf9"
+    stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}/nodes/#{node_id}", method: :delete, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert client.kubernetes.delete_node_pool_instance(vke_id: vke_id, nodepool_id: nodepool_id, node_id: node_id)
+  end
 end
