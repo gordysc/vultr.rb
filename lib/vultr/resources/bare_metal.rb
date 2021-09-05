@@ -6,7 +6,7 @@ module Vultr
     end
 
     def create(**attributes)
-      BareMetal.new post_request("bare-metals", body: attributes).body.dig("bare_metal")
+      BareMetal.new post_request("bare-metals", body: attributes).body.dig("baremetal")
     end
 
     def retrieve(baremetal_id:)
