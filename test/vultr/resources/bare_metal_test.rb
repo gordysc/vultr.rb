@@ -225,4 +225,17 @@ class BareMetalResourceTest < Minitest::Test
     assert_equal "next", ipv6.next_cursor
     assert_equal "prev", ipv6.prev_cursor
   end
+
+  def test_halt_instances
+    baremetal_ids = [
+      "cb676a46-66fd-4dfb-b839-443f2e6c0b60", 
+      "7f6f84ea-8f87-4d9e-af01-ac44db05911c", 
+      "54a83807-64ce-42e8-a0da-4d6c31c5b93b"
+    ]
+
+    stub = stub_request("bare-metals/halt", method: :post, body: { baremetal_ids: baremetal_ids }, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert client.bare_metal.halt_instances(baremetal_ids: baremetal_ids)
+  end
 end
