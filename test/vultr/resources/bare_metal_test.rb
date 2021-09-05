@@ -150,4 +150,21 @@ class BareMetalResourceTest < Minitest::Test
 
     assert client.bare_metal.halt(baremetal_id: baremetal_id)
   end
+
+  def test_bandwidth
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/bandwidth", method: :get, body: {}, response: stub_response(fixture: "bare_metals/bandwidth"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    bandwidth = client.bare_metal.bandwidth(baremetal_id: baremetal_id)
+
+    assert_equal bandwidth.class, Vultr::Object
+    assert_equal bandwidth["2020-07-25"].class, OpenStruct
+    assert_equal bandwidth["2020-07-25"].incoming_bytes, 15989787
+    assert_equal bandwidth["2020-07-25"].outgoing_bytes, 25327729
+
+    assert_equal bandwidth["2020-07-26"].class, OpenStruct
+    assert_equal bandwidth["2020-07-26"].incoming_bytes, 13964112
+    assert_equal bandwidth["2020-07-26"].outgoing_bytes, 22257069
+  end
 end
