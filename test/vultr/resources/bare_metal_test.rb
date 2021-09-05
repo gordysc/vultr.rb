@@ -178,4 +178,16 @@ class BareMetalResourceTest < Minitest::Test
     assert_equal user_data.class, Vultr::Object
     assert_equal user_data.data, "QmFzZTY0IEV4YW1wbGUgRGF0YQ=="
   end
+
+  def test_upgrades
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/upgrades", method: :get, response: stub_response(fixture: "bare_metals/upgrades"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    upgrades = client.bare_metal.upgrades(baremetal_id: baremetal_id)
+
+    assert_equal upgrades.class, Vultr::Object
+    assert_equal upgrades.os.class, Array
+    assert_equal upgrades.applications.class, Array
+  end
 end
