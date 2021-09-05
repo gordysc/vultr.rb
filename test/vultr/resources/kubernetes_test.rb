@@ -52,4 +52,12 @@ class KubernetesResourceTest < Minitest::Test
     assert_equal vke_cluster.status, "active"
     assert_equal vke_cluster.node_pools.class, Array
   end
+
+  def test_update
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    body = {label: "My New Label"}
+    stub = stub_request("kubernetes/clusters/#{vke_id}", method: :put, body: body, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    assert client.kubernetes.update(vke_id: vke_id, **body)
+  end
 end
