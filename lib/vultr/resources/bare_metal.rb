@@ -50,7 +50,7 @@ module Vultr
     end
 
     def vnc(baremetal_id:)
-      Object.new get_request("bare-metals/#{baremetal_id}/vnc", params: params).body.dig("vnc")
+      Object.new get_request("bare-metals/#{baremetal_id}/vnc").body.dig("vnc")
     end
 
     def list_ipv4(baremetal_id:, **params)

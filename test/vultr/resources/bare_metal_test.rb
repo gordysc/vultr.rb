@@ -190,4 +190,15 @@ class BareMetalResourceTest < Minitest::Test
     assert_equal upgrades.os.class, Array
     assert_equal upgrades.applications.class, Array
   end
+
+  def test_vnc
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/vnc", method: :get, response: stub_response(fixture: "bare_metals/vnc"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    vnc = client.bare_metal.vnc(baremetal_id: baremetal_id)
+
+    assert_equal vnc.class, Vultr::Object
+    assert_equal vnc.url, "https://my.vultr.com/subs/baremetal/novnc/api.php?data=00example11223344"
+  end
 end
