@@ -14,4 +14,21 @@ class BlockStorageResourceTest < Minitest::Test
     assert_equal "next", blocks.next_cursor
     assert_equal "prev", blocks.prev_cursor
   end
+
+  def test_create
+    body = {region: "ewr", size_gb: 50, label: "Example Block Storage"}
+    stub = stub_request("blocks", method: :post, body: body, response: stub_response(fixture: "block_storage/create", status: 202))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    blocks = client.block_storage.create(**body)
+
+    assert_equal blocks.id, "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    assert_equal blocks.date_created, Time.parse("2020-10-10T01:56:20+00:00")
+    assert_equal blocks.cost, 5
+    assert_equal blocks.status, "active"
+    assert_equal blocks.size_gb, 50
+    assert_equal blocks.region, "ewr"
+    assert_equal blocks.attached_to_instance, "742c9913-d088-4d67-bc61-5a10e922fbd1"
+    assert_equal blocks.label, "Example Block Storage"
+    assert_equal blocks.mount_id, "ewr-example112233"
+  end
 end
