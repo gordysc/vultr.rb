@@ -55,7 +55,7 @@ module Vultr
     end
 
     def recycle_node_pool_instance(vke_id:, nodepool_id:, node_id:)
-      post_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}/nodes/#{node_id}/recycle")
+      post_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}/nodes/#{node_id}/recycle", body: {})
     end
   end
 end
