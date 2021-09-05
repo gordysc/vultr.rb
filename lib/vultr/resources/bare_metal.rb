@@ -22,7 +22,7 @@ module Vultr
     end
 
     def start(baremetal_id:)
-      post_request("bare-metals/#{baremetal_id}/start")
+      post_request("bare-metals/#{baremetal_id}/start", body: {})
     end
 
     def reboot(baremetal_id:)
