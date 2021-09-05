@@ -58,8 +58,8 @@ module Vultr
       Collection.from_response(response, key: "ipv4s", type: Object)
     end
 
-    def list_ipv6(baremetal_id:, **params)
-      response = get_request("bare-metals/#{baremetal_id}/ipv6", params: params)
+    def list_ipv6(baremetal_id:)
+      response = get_request("bare-metals/#{baremetal_id}/ipv6")
       Collection.from_response(response, key: "ipv6s", type: Object)
     end
 

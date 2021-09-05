@@ -211,4 +211,18 @@ class BareMetalResourceTest < Minitest::Test
     assert_equal "next", ipv4.next_cursor
     assert_equal "prev", ipv4.prev_cursor
   end
+
+  def test_list_ipv6
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/ipv6", method: :get, response: stub_response(fixture: "bare_metals/list_ipv6"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    ipv6 = client.bare_metal.list_ipv6(baremetal_id: baremetal_id)
+
+    assert_equal Vultr::Collection, ipv6.class
+    assert_equal Vultr::Object, ipv6.data.first.class
+    assert_equal 1, ipv6.total
+    assert_equal "next", ipv6.next_cursor
+    assert_equal "prev", ipv6.prev_cursor
+  end
 end
