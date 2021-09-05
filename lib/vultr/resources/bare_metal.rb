@@ -26,7 +26,7 @@ module Vultr
     end
 
     def reboot(baremetal_id:)
-      post_request("bare-metals/#{baremetal_id}/reboot")
+      post_request("bare-metals/#{baremetal_id}/reboot", body: {})
     end
 
     def reinstall(baremetal_id:)

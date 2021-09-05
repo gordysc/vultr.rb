@@ -104,4 +104,12 @@ class BareMetalResourceTest < Minitest::Test
 
     assert client.bare_metal.start(baremetal_id: baremetal_id)
   end
+
+  def test_reboot
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/reboot", method: :post, body: {}, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert client.bare_metal.reboot(baremetal_id: baremetal_id)
+  end
 end
