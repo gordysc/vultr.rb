@@ -84,7 +84,7 @@ class KubernetesResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     vke_cluster = client.kubernetes.list_resources(vke_id: vke_id)
 
-    assert_equal vke_cluster['block_storage'].class, Array
+    assert_equal vke_cluster.block_storage.class, Array
     assert_equal vke_cluster.load_balancer.class, Array
   end
 
@@ -105,7 +105,6 @@ class KubernetesResourceTest < Minitest::Test
     vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     nodepool_id = "e97bdee9-2781-4f31-be03-60fc75f399ae"
 
-    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
     stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}", response: stub_response(fixture: "kubernetes/retrieve_node_pool"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     node_pool = client.kubernetes.retrieve_node_pool(vke_id: vke_id, nodepool_id: nodepool_id)
