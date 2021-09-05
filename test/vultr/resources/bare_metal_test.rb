@@ -158,7 +158,6 @@ class BareMetalResourceTest < Minitest::Test
 
     bandwidth = client.bare_metal.bandwidth(baremetal_id: baremetal_id)
 
-    assert_equal bandwidth.class, Vultr::Object
     assert_equal bandwidth["2020-07-25"].class, OpenStruct
     assert_equal bandwidth["2020-07-25"].incoming_bytes, 15989787
     assert_equal bandwidth["2020-07-25"].outgoing_bytes, 25327729
@@ -175,7 +174,6 @@ class BareMetalResourceTest < Minitest::Test
 
     user_data = client.bare_metal.user_data(baremetal_id: baremetal_id)
 
-    assert_equal user_data.class, Vultr::Object
     assert_equal user_data.data, "QmFzZTY0IEV4YW1wbGUgRGF0YQ=="
   end
 
@@ -186,7 +184,6 @@ class BareMetalResourceTest < Minitest::Test
 
     upgrades = client.bare_metal.upgrades(baremetal_id: baremetal_id)
 
-    assert_equal upgrades.class, Vultr::Object
     assert_equal upgrades.os.class, Array
     assert_equal upgrades.applications.class, Array
   end
@@ -198,7 +195,20 @@ class BareMetalResourceTest < Minitest::Test
 
     vnc = client.bare_metal.vnc(baremetal_id: baremetal_id)
 
-    assert_equal vnc.class, Vultr::Object
     assert_equal vnc.url, "https://my.vultr.com/subs/baremetal/novnc/api.php?data=00example11223344"
+  end
+
+  def test_list_ipv4
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/ipv4", method: :get, response: stub_response(fixture: "bare_metals/list_ipv4"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    ipv4 = client.bare_metal.list_ipv4(baremetal_id: baremetal_id)
+
+    assert_equal Vultr::Collection, ipv4.class
+    assert_equal Vultr::Object, ipv4.data.first.class
+    assert_equal 1, ipv4.total
+    assert_equal "next", ipv4.next_cursor
+    assert_equal "prev", ipv4.prev_cursor
   end
 end

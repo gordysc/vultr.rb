@@ -53,8 +53,8 @@ module Vultr
       Object.new get_request("bare-metals/#{baremetal_id}/vnc").body.dig("vnc")
     end
 
-    def list_ipv4(baremetal_id:, **params)
-      response = get_request("bare-metals/#{baremetal_id}/ipv4", params: params)
+    def list_ipv4(baremetal_id:)
+      response = get_request("bare-metals/#{baremetal_id}/ipv4")
       Collection.from_response(response, key: "ipv4s", type: Object)
     end
 
