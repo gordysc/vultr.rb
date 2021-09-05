@@ -49,4 +49,12 @@ class BlockStorageResourceTest < Minitest::Test
     assert_equal blocks.label, "Example Block Storage"
     assert_equal blocks.mount_id, "ewr-example112233"
   end
+
+  def test_update
+    block_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    body = {size_gb: 50, label: "Example Block Storage"}
+    stub = stub_request("blocks/#{block_id}", method: :patch, body: body, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    assert client.block_storage.update(block_id: block_id, **body)
+  end
 end
