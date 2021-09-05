@@ -60,4 +60,12 @@ class KubernetesResourceTest < Minitest::Test
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
     assert client.kubernetes.update(vke_id: vke_id, **body)
   end
+
+  def test_delete
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("kubernetes/clusters/#{vke_id}", method: :delete, response: {})
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    assert client.kubernetes.delete(vke_id: vke_id)
+  end
 end
