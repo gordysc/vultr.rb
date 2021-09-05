@@ -153,7 +153,7 @@ class BareMetalResourceTest < Minitest::Test
 
   def test_bandwidth
     baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
-    stub = stub_request("bare-metals/#{baremetal_id}/bandwidth", method: :get, body: {}, response: stub_response(fixture: "bare_metals/bandwidth"))
+    stub = stub_request("bare-metals/#{baremetal_id}/bandwidth", method: :get, response: stub_response(fixture: "bare_metals/bandwidth"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
 
     bandwidth = client.bare_metal.bandwidth(baremetal_id: baremetal_id)
@@ -166,5 +166,16 @@ class BareMetalResourceTest < Minitest::Test
     assert_equal bandwidth["2020-07-26"].class, OpenStruct
     assert_equal bandwidth["2020-07-26"].incoming_bytes, 13964112
     assert_equal bandwidth["2020-07-26"].outgoing_bytes, 22257069
+  end
+
+  def test_user_data
+    baremetal_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("bare-metals/#{baremetal_id}/user-data", method: :get, response: stub_response(fixture: "bare_metals/user_data"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+
+    user_data = client.bare_metal.user_data(baremetal_id: baremetal_id)
+
+    assert_equal user_data.class, Vultr::Object
+    assert_equal user_data.data, "QmFzZTY0IEV4YW1wbGUgRGF0YQ=="
   end
 end
