@@ -119,4 +119,21 @@ class KubernetesResourceTest < Minitest::Test
     assert_equal node_pool.count, 2
     assert_equal node_pool.nodes.class, Array
   end
+
+  def test_create_node_pool
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    body = {node_quantity: 2, label: "nodepool", paln: "vc2-lc-2gb"}
+    stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools", method: :post, body: body, response: stub_response(fixture: "kubernetes/create_node_pool"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    node_pool = client.kubernetes.create_node_pool(vke_id: vke_id, **body)
+
+    assert_equal node_pool.id, "4130764b-5276-4552-546f-32513239732b"
+    assert_equal node_pool.date_created, Time.parse("2021-07-07T23:29:18+00:00")
+    assert_equal node_pool.date_updated, Time.parse("2021-07-08T23:29:18+00:00")
+    assert_equal node_pool.label, "nodepool-48770716"
+    assert_equal node_pool.plan_id, "vc2-1c-2gb"
+    assert_equal node_pool.status, "pending"
+    assert_equal node_pool.count, 2
+    assert_equal node_pool.nodes.class, Array
+  end
 end
