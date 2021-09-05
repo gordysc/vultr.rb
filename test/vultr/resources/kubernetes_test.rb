@@ -33,4 +33,23 @@ class KubernetesResourceTest < Minitest::Test
     assert_equal kubernetes.status, "pending"
     assert_equal kubernetes.node_pools.class, Array
   end
+
+  def test_retrieve
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    stub = stub_request("kubernetes/clusters/#{vke_id}", response: stub_response(fixture: "kubernetes/retrieve"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    vke_cluster = client.kubernetes.retrieve(vke_id: vke_id)
+
+    assert_equal vke_cluster.id, "455dcd32-e621-48ee-a10e-0cb5f754e13e"
+    assert_equal vke_cluster.label, "vke"
+    assert_equal vke_cluster.date_created, Time.parse("2021-07-07T22:57:01+00:00")
+    assert_equal vke_cluster.cluster_subnet, "10.244.0.0/16"
+    assert_equal vke_cluster.service_subnet, "10.96.0.0/12"
+    assert_equal vke_cluster.ip, "207.246.109.187"
+    assert_equal vke_cluster.endpoint, "455dcd32-e621-48ee-a10e-0cb5f754e13e.vultr-k8s.com"
+    assert_equal vke_cluster.version, "v1.20.0+1"
+    assert_equal vke_cluster.region, "lax"
+    assert_equal vke_cluster.status, "active"
+    assert_equal vke_cluster.node_pools.class, Array
+  end
 end
