@@ -34,8 +34,8 @@ module Vultr
       Collection.from_response(response, key: "node_pools", type: Object)
     end
 
-    def retrieve_node_pool(vke_id:, node_pool_id:)
-      Object.new get_request("kubernetes/clusters/#{vke_id}/node-pools/#{node_pool_id}").body.dig("node_pool")
+    def retrieve_node_pool(vke_id:, nodepool_id:)
+      Object.new get_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}").body.dig("node_pool")
     end
 
     def create_node_pool(vke_id:, **attributes)

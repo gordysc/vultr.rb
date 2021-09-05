@@ -103,12 +103,12 @@ class KubernetesResourceTest < Minitest::Test
 
   def test_retrieve_node_pool
     vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
-    node_pool_id = "e97bdee9-2781-4f31-be03-60fc75f399ae"
+    nodepool_id = "e97bdee9-2781-4f31-be03-60fc75f399ae"
 
     vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
-    stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools/#{node_pool_id}", response: stub_response(fixture: "kubernetes/retrieve_node_pool"))
+    stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}", response: stub_response(fixture: "kubernetes/retrieve_node_pool"))
     client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
-    node_pool = client.kubernetes.retrieve_node_pool(vke_id: vke_id, node_pool_id: node_pool_id)
+    node_pool = client.kubernetes.retrieve_node_pool(vke_id: vke_id, nodepool_id: nodepool_id)
 
     assert_equal node_pool.id, "e97bdee9-2781-4f31-be03-60fc75f399ae"
     assert_equal node_pool.date_created, Time.parse("2021-07-07T23:27:08+00:00")
@@ -134,6 +134,24 @@ class KubernetesResourceTest < Minitest::Test
     assert_equal node_pool.plan_id, "vc2-1c-2gb"
     assert_equal node_pool.status, "pending"
     assert_equal node_pool.count, 2
+    assert_equal node_pool.nodes.class, Array
+  end
+
+  def test_update_node_pool
+    vke_id = "cb676a46-66fd-4dfb-b839-443f2e6c0b60"
+    nodepool_id = "e97bdee9-2781-4f31-be03-60fc75f399ae"
+    body = {node_quantity: 1}
+    stub = stub_request("kubernetes/clusters/#{vke_id}/node-pools/#{nodepool_id}", method: :patch, body: body, response: stub_response(fixture: "kubernetes/update_node_pool"))
+    client = Vultr::Client.new(api_key: "fake", adapter: :test, stubs: stub)
+    node_pool = client.kubernetes.update_node_pool(vke_id: vke_id, nodepool_id: nodepool_id, **body)
+
+    assert_equal node_pool.id, "e97bdee9-2781-4f31-be03-60fc75f399ae"
+    assert_equal node_pool.date_created, Time.parse("2021-07-07T23:27:08+00:00")
+    assert_equal node_pool.date_updated, Time.parse("2021-07-08T12:12:44+00:00")
+    assert_equal node_pool.label, "my-label-48770703"
+    assert_equal node_pool.plan_id, "vc2-1c-2gb"
+    assert_equal node_pool.status, "active"
+    assert_equal node_pool.count, 1
     assert_equal node_pool.nodes.class, Array
   end
 end
