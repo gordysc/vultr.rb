@@ -30,7 +30,7 @@ module Vultr
     end
 
     def reinstall(baremetal_id:)
-      BareMetal.new post_request("bare-metals/#{baremetal_id}/reinstall").body.dig("bare_metal")
+      BareMetal.new post_request("bare-metals/#{baremetal_id}/reinstall", body: {}).body.dig("bare_metal")
     end
 
     def halt(baremetal_id:)
